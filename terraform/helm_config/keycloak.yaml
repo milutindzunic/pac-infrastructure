@@ -1,0 +1,15 @@
+keycloak:
+  existingSecret: keycloak-user-access
+  existingSecretKey: password
+  persistence:
+    dbVendor: mysql
+    dbPort: 3306
+    existingSecret: keycloak-mysql-access
+    existingSecretUsernameKey: username
+    existingSecretPasswordKey: password
+  ingress:
+    enabled: true
+    path: /
+    servicePort: http
+    hosts:
+      - keycloak.minikube

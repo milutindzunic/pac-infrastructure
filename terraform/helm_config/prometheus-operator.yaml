@@ -1,0 +1,13 @@
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - conference.grafana
+    path: /
+prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - conference.prometheus
+    paths:
+      - /

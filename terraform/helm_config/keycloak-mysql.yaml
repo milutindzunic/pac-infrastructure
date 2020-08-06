@@ -1,0 +1,17 @@
+db:
+  name: "keycloak"
+  user: "keycloak"
+  ## password injected via secret
+master:
+  persistence:
+    size: 2Gi
+slave:
+  persistence:
+    size: 2Gi
+  replicas: 0
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    selector:
+      release: prometheus-operator
