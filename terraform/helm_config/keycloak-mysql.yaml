@@ -4,14 +4,8 @@ db:
   ## password injected via secret
 master:
   persistence:
-    size: 2Gi
+    size: 1Gi
 slave:
   persistence:
-    size: 2Gi
+    size: 1Gi
   replicas: 0
-metrics:
-  enabled: true
-  serviceMonitor:
-    enabled: true
-    selector:
-      release: prometheus-operator
