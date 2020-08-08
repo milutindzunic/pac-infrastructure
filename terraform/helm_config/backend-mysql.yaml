@@ -1,0 +1,11 @@
+db:
+  name: "backend"
+  user: "backend"
+  ## password injected via secret
+master:
+  persistence:
+    size: 1Gi
+slave:
+  persistence:
+    size: 1Gi
+  replicas: 0

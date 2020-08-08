@@ -1,0 +1,8 @@
+service:
+  targetPort: 80 # TODO change when the go service is deployed...
+ingress:
+  enabled: true
+  hosts:
+    - host: conference.backend
+      paths:
+        - "/"
