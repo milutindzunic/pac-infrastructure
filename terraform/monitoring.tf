@@ -24,7 +24,7 @@ resource "kubernetes_secret" "prometheus-access" {
 resource "helm_release" "prometheus-operator" {
   name = "prometheus-operator"
   namespace = kubernetes_namespace.monitoring.metadata[0].name
-  repository = data.helm_repository.stable.url
+  repository = local.helm_repository_stable
   chart = "prometheus-operator"
 
   values = [

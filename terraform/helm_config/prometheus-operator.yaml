@@ -9,5 +9,11 @@ prometheus:
     enabled: true
     hosts:
       - conference.prometheus
-    paths:
-      - /
+    path: /
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+    patch:
+      enabled: false
+  tlsProxy:
+    enabled: false
