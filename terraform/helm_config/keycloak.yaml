@@ -1,9 +1,15 @@
 keycloak:
-  existingSecret: keycloak-user-access
+  username: admin
+  # keycloak admin user password injected from secret
+  existingSecret: keycloak-access
   existingSecretKey: password
   persistence:
+    deployPostgres: false
     dbVendor: mysql
+    dbHost: keycloak-mysql
     dbPort: 3306
+    dbName: keycloak
+    # database user injected from secret
     existingSecret: keycloak-mysql-access
     existingSecretUsernameKey: username
     existingSecretPasswordKey: password

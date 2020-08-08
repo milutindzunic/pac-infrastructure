@@ -22,29 +22,26 @@ resource "kubernetes_secret" "keycloak-mysql-access" {
 
   data = {
     username = "keycloak"
-    database = "keycloak"
     password = random_password.keycloak-mysql-password.result
   }
 }
 
-resource "kubernetes_secret" "keycloak-user-access" {
-
+resource "kubernetes_secret" "keycloak-access" {
   metadata {
-    name = "keycloak-user-access"
+    name = "keycloak-access"
     namespace = kubernetes_namespace.keycloak.metadata[0].name
   }
 
   data = {
     "password" = random_password.keycloak-user-password.result
   }
-
 }
 
 resource "helm_release" "keycloak-mysql" {
   name = "keycloak-mysql"
   namespace = kubernetes_namespace.keycloak.metadata[0].name
   chart = "mysql"
-  repository = data.helm_repository.bitnami.url
+  repository = local.helm_repository_bitnami
 
   values = [
     file("helm_config/keycloak-mysql.yaml")
@@ -54,7 +51,6 @@ resource "helm_release" "keycloak-mysql" {
     name = "db.password"
     value = random_password.keycloak-mysql-password.result
   }
-
 }
 
 resource "helm_release" "keycloak" {
@@ -66,7 +62,8 @@ resource "helm_release" "keycloak" {
   name = "keycloak"
   namespace = kubernetes_namespace.keycloak.metadata[0].name
   chart = "keycloak"
-  repository = data.helm_repository.codecentric.url
+  version = "8.3.0"
+  repository = local.helm_repository_codecentric
 
   values = [
     file("helm_config/keycloak.yaml")
