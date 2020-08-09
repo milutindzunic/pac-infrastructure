@@ -1,33 +1,10 @@
 service:
   targetPort: 9090
-env:
-  - name: DB_DRIVER
-    value: mysql
-  - name: DB_HOST # ne mora da se sadrzi u secretu...
-      valueFrom:
-        secretKeyRef:
-          name: foo
-          key: bar
-  - name: DB_PORT # ne mora da se sadrzi u secretu...
-      valueFrom:
-        secretKeyRef:
-          name: foo
-          key: bar
-  - name: DB_NAME # moze, ne mora iz secreta
-      valueFrom:
-        secretKeyRef:
-          name: foo
-          key: bar
-  - name: DB_USER
-      valueFrom:
-        secretKeyRef:
-          name: foo
-          key: bar
-  - name: DB_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: foo
-          key: bar
+envFrom:
+  - ConfigMapRef:
+      name: backend-config
+  - SecretRef:
+      name: backend-mysql-access
 ingress:
   enabled: true
   hosts:
