@@ -11,7 +11,7 @@ resource "random_password" "backend-mysql-password" {
 
 resource "kubernetes_secret" "backend-mysql-access" {
   metadata {
-    name = "keycloak-backend-access"
+    name = "backend-mysql-access"
     namespace = kubernetes_namespace.backend.metadata[0].name
   }
 
@@ -40,12 +40,14 @@ resource "helm_release" "backend-mysql" {
 resource "kubernetes_config_map" "backend-config" {
   metadata {
     name = "backend-config"
+    namespace = kubernetes_namespace.backend.metadata[0].name
   }
 
   data = {
+    BIND_ADDRESS = ":80"
     DB_DRIVER = "mysql"
     DB_HOST = helm_release.backend-mysql.metadata[0].name
-    DB_PORT = "3360"
+    DB_PORT = "3306"
     DB_NAME = "backend"
   }
 }
@@ -57,8 +59,8 @@ resource "helm_release" "backend" {
 
   depends_on = [
     helm_release.backend-mysql,
-    kubernetes_secret.backend-mysql-access,
-    kubernetes_config_map.backend-config
+    kubernetes_config_map.backend-config,
+    kubernetes_secret.backend-mysql-access
   ]
 
   values = [
