@@ -1,10 +1,11 @@
-service:
-  targetPort: 9090
+image:
+  repository: conference-go
+  tag: latest
 envFrom:
-  - ConfigMapRef:
-      name: backend-config
-  - SecretRef:
-      name: backend-mysql-access
+- configMapRef:
+    name: backend-config
+- secretRef:
+    name: backend-mysql-access
 ingress:
   enabled: true
   hosts:

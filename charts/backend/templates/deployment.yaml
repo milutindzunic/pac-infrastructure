@@ -37,6 +37,10 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          {{- if .Values.envFrom }}
+          envFrom:
+            {{- toYaml .Values.envFrom | nindent 12 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /
