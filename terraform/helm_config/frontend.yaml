@@ -1,0 +1,9 @@
+image:
+  repository: pac-frontend
+  tag: latest
+ingress:
+  enabled: true
+  hosts:
+    - host: conference.frontend
+      paths:
+        - "/"
