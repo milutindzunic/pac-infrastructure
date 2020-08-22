@@ -1,5 +1,5 @@
 image:
-  repository: conference-go
+  repository: pac-backend
   tag: latest
 envFrom:
 - configMapRef:
