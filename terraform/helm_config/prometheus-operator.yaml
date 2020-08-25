@@ -5,6 +5,11 @@ grafana:
       - conference.grafana
     path: /
 prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: pac-backend
+        static_configs:
+          - targets: ["backend.backend"]
   ingress:
     enabled: true
     hosts:
