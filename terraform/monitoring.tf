@@ -21,11 +21,27 @@ resource "kubernetes_secret" "prometheus-access" {
   }
 }
 
+resource "kubernetes_config_map" "grafana-dashboard-config" {
+  metadata {
+    name = "grafana-dashboard-config"
+    namespace = kubernetes_namespace.monitoring.metadata[0].name
+  }
+
+  data = {
+    "PAC-Backend-Dashboard.json" = file("helm_config/grafana/PAC-Backend-Dashboard.json")
+  }
+}
+
 resource "helm_release" "prometheus-operator" {
   name = "prometheus-operator"
   namespace = kubernetes_namespace.monitoring.metadata[0].name
   repository = local.helm_repository_stable
   chart = "prometheus-operator"
+  version = "9.3.1"
+
+  depends_on = [
+    kubernetes_config_map.grafana-dashboard-config
+  ]
 
   values = [
     file("helm_config/prometheus-operator.yaml")

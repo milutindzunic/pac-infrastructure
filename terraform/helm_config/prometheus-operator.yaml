@@ -1,9 +1,3 @@
-grafana:
-  ingress:
-    enabled: true
-    hosts:
-      - conference.grafana
-    path: /
 prometheus:
   prometheusSpec:
     additionalScrapeConfigs:
@@ -22,3 +16,23 @@ prometheusOperator:
       enabled: false
   tlsProxy:
     enabled: false
+grafana:
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+  dashboardsConfigMaps:
+    default: grafana-dashboard-config
+  ingress:
+    enabled: true
+    hosts:
+      - conference.grafana
+    path: /
