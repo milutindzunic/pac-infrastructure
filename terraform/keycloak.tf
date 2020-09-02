@@ -53,17 +53,28 @@ resource "helm_release" "keycloak-mysql" {
   }
 }
 
+resource "kubernetes_secret" "realm-secret" {
+  metadata {
+    name = "realm-secret"
+    namespace = kubernetes_namespace.keycloak.metadata[0].name
+  }
+
+  data = {
+    "realm.json" = file("helm_config/keycloak/realm-export.json")
+  }
+}
+
 resource "helm_release" "keycloak" {
-
-  depends_on = [
-    helm_release.keycloak-mysql
-  ]
-
   name = "keycloak"
   namespace = kubernetes_namespace.keycloak.metadata[0].name
   chart = "keycloak"
   version = "8.3.0"
   repository = local.helm_repository_codecentric
+
+  depends_on = [
+    helm_release.keycloak-mysql,
+    kubernetes_secret.realm-secret
+  ]
 
   values = [
     file("helm_config/keycloak.yaml")

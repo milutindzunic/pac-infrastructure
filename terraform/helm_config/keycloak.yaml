@@ -1,6 +1,6 @@
 keycloak:
   username: admin
-  # keycloak admin user password injected from secret
+  # Keycloak admin user password injected from secret
   existingSecret: keycloak-access
   existingSecretKey: password
   persistence:
@@ -9,13 +9,25 @@ keycloak:
     dbHost: keycloak-mysql
     dbPort: 3306
     dbName: keycloak
-    # database user injected from secret
+    # Database user injected from secret
     existingSecret: keycloak-mysql-access
     existingSecretUsernameKey: username
     existingSecretPasswordKey: password
+  # Import of realm from secret
+  extraVolumes: |
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+  extraVolumeMounts: |
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+  extraArgs: -Dkeycloak.import=/realm/realm.json
+  # Ingress
   ingress:
     enabled: true
     path: /
     servicePort: http
     hosts:
       - conference.keycloak
+      - keycloak-http.keycloak.svc.cluster.local
