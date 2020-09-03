@@ -10,6 +10,7 @@ resource "helm_release" "frontend" {
   chart = "../charts/frontend"
 
   depends_on = [
+    helm_release.keycloak,
     helm_release.backend
   ]
 
