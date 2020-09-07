@@ -1,4 +1,4 @@
-# PAC Frontend
+# PAC Infrastructure
 Infrastructure for the PAC 2020 application (Conferencing app)
 
 ## Running on Minikube
