@@ -2,12 +2,13 @@
 Infrastructure for the PAC 2020 application (Conferencing app)
 
 ## Running on Minikube
-* First, configure your Minikube with some resources and necessary addons:
+* First, configure your Minikube with some resources (before starting minikube) and necessary addons:
 
     ```
     minikube config set cpus 4
     minikube config set memory 8192
     minikube config set disk-size 50g
+    minikube start
     minikube addons enable ingress
     ```
 
