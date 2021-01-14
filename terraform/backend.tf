@@ -25,6 +25,7 @@ resource "helm_release" "backend-mysql" {
   name = "backend-mysql"
   namespace = kubernetes_namespace.backend.metadata[0].name
   chart = "mysql"
+  version = "6.10.3"
   repository = local.helm_repository_bitnami
 
   values = [

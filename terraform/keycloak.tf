@@ -41,6 +41,7 @@ resource "helm_release" "keycloak-mysql" {
   name = "keycloak-mysql"
   namespace = kubernetes_namespace.keycloak.metadata[0].name
   chart = "mysql"
+  version = "6.10.3"
   repository = local.helm_repository_bitnami
 
   values = [
